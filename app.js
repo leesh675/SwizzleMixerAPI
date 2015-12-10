@@ -12,6 +12,8 @@ function REST(){
 
 REST.prototype.configureExpress = function(pool) {
       var self = this;
+
+      app.use('/publish', express.static(__dirname + '/htmls'));
       app.use(bodyParser.urlencoded({ extended: true }));
       app.use(bodyParser.json());
       var router = express.Router();
@@ -40,8 +42,8 @@ REST.prototype.configureExpress = function(pool) {
 }
 
 REST.prototype.startServer = function() {
-      app.listen(3000,function(){
-          console.log("All right ! I am alive at Port 3000.");
+      app.listen(80,function(){
+          console.log("All right ! I am alive at Port 80.");
       });
 }
 
