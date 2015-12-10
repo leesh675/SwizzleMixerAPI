@@ -20,6 +20,7 @@ REST_ROUTER.prototype.handleRoutes= function(router,pool,md5,fs) {
             '</body>' +
             '<script>' +
                 'var ytPlaylist = '+ JSON.stringify(req.body)+';' +
+                'var ytNextIfDeleted;'+
                 'function onYouTubeIframeAPIReady(){player=new YT.Player("player",{height:"100%",width:"100%",videoId:"",autoplay:1,events:{onReady:onPlayerReady,onStateChange:onPlayerStateChange,onError:onPlayerError}})}function onPlayerReady(t){playNext(),setInterval(function(){started&&ytNowPlaying&&0!=ytNowPlaying.endSeconds&&1==player.getPlayerState()&&ytNowPlaying.endSeconds<player.getCurrentTime()&&player.pauseVideo()},500)}function onPlayerStateChange(t){t.data==YT.PlayerState.PLAYING?started=!0:t.data==YT.PlayerState.ENDED&&started&&(ytNowPlaying=null,playNext(),started=!1)}function onPlayerError(t){ytNowPlaying=null,playNext()}function stopVideo(){player.stopVideo()}function playNext(){for(var t=null,e=0;e<ytPlaylist.length;e++){var a=ytPlaylist[e];a.isPlaying&&(a.isPlaying=!1,t=ytPlaylist[e+1]?ytPlaylist[e+1]:ytPlaylist[0])}null==t&&ytNextIfDeleted&&(t=ytNextIfDeleted),playVideoInPlaylist(t)}function playVideoInPlaylist(t){playingId=t.uuid,t.isPlaying=!0,ytNowPlaying=t,player.loadVideoById(t),ytNextIfDeleted=null}var ytNowPlaying,playingId,tag=document.createElement("script");tag.src="https://www.youtube.com/iframe_api";var firstScriptTag=document.getElementsByTagName("script")[0];firstScriptTag.parentNode.insertBefore(tag,firstScriptTag);var player,started=!1;' +
             '</script>' +
         '</html>';
