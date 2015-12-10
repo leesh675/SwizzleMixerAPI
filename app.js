@@ -14,7 +14,7 @@ REST.prototype.configureExpress = function(pool) {
       var self = this;
 
       app.use('/publish', express.static(__dirname + '/htmls'));
-      app.use('/tool', express.static(__dirname + '/SwizzleMixer'));
+      app.use('/tool', express.static(__dirname + '/swizzle_mixer'));
       app.use(bodyParser.urlencoded({ extended: true }));
       app.use(bodyParser.json());
       var router = express.Router();
