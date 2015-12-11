@@ -9,13 +9,7 @@ REST_ROUTER.prototype.handleRoutes= function(router,pool,md5,fs) {
         res.json("http://54.200.139.171:3000/publish/swizzle.html");
 
         var content =
-        '<meta name="viewport"
-      content="
-          width =device-width,
-          initial-scale = 1,
-          minimum-scale = 1,
-          maximum-scale = 1,
-          user-scalable =yes "/>' +
+        '<meta name="viewport" content="width=device-width,initial-scale = 1,minimum-scale = 1,maximum-scale = 1,user-scalable =yes "/>' +
 
         '<html>' +
             '<head>' +
