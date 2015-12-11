@@ -6,7 +6,7 @@ REST_ROUTER.prototype.handleRoutes= function(router,pool,md5,fs) {
 
     // write file
     router.post('/permitted/write' ,function(req,res){
-        res.json("This is test!! Man~ \n You need to copy URL below \n http://54.200.139.171:3000/publish/swizzle.html");
+        res.json("http://54.200.139.171:3000/publish/swizzle.html");
 
         var content = 
         '<html>' +
