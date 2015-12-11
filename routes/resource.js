@@ -8,7 +8,15 @@ REST_ROUTER.prototype.handleRoutes= function(router,pool,md5,fs) {
     router.post('/permitted/write' ,function(req,res){
         res.json("http://54.200.139.171:3000/publish/swizzle.html");
 
-        var content = 
+        var content =
+        '<meta name="viewport"
+      content="
+          width =device-width,
+          initial-scale = 1,
+          minimum-scale = 1,
+          maximum-scale = 1,
+          user-scalable =yes "/>' +
+
         '<html>' +
             '<head>' +
                 '<style>' +
