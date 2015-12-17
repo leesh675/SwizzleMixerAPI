@@ -3,18 +3,59 @@ var bodyParser  = require("body-parser");
 var md5         = require('MD5');
 var rest        = require("./REST.js");
 var fs          = require('fs');
+global.mysql    = require("mysql");
 var app         = express();
 
 function REST(){
     var self = this;
-    self.configureExpress();
+    self.connectMysql();
 };
+
+REST.prototype.connectMysql = function() {
+    var self = this;
+    var pool      =    mysql.createPool({
+        acquireTimeout: 30000, // 30s
+        connectionLimit : 100,
+        host     : 'localhost',
+        user     : 'root',
+        password : 'bonosound',
+        database : 'swizzle_mixer',
+        debug    :  true
+    });
+
+    // pool.getConnection(function(err,connection){
+    //     if(err) {
+    //       self.stop(err);
+    //     } else {
+    //       self.configureExpress(connection);
+    //     }
+    // });
+
+    self.configureExpress(pool);
+}
+
+function isAuthenticated(req, res, next) {
+
+    console.log("================================");
+    console.log(res.url);
+    console.log("================================");
+    // do any checks you want to in here
+
+    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+    // you can do this however you want with whatever variables you set up
+    // if (req.user.authenticated)
+        return next();
+
+    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+    // res.redirect('/#/');
+}
+
 
 REST.prototype.configureExpress = function(pool) {
       var self = this;
 
       app.use('/publish', express.static(__dirname + '/htmls'));
-      app.use('/tool', express.static(__dirname + '/swizzle_mixer'));
+      app.use('/', isAuthenticated, express.static(__dirname + '/swizzle_mixer'));
       app.use(bodyParser.urlencoded({ extended: true }));
       app.use(bodyParser.json());
       var router = express.Router();

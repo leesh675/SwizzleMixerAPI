@@ -1,3 +1,4 @@
+var user = require("./routes/user.js");
 var resource = require("./routes/resource.js");
 
 function REST_ROUTER(router,pool,md5,fs) {
@@ -5,13 +6,14 @@ function REST_ROUTER(router,pool,md5,fs) {
     self.handleRoutes(router,pool,md5,fs);
 
     // routes
-    new resource().handleRoutes(router,pool,md5,fs);
+    new user().handleRoutes(router,pool,md5,fs);
+    new resource().handleRoutes(router,pool,md5,fs);    
 }
 
 REST_ROUTER.prototype.handleRoutes= function(router,pool,md5) {
-    router.get("/",function(req,res){
-        res.json({"Message" : "Hello"});
-    })
+    // router.get("/",function(req,res){
+    //     res.redirect("/tool/");
+    // })
 }
 
 module.exports = REST_ROUTER;
