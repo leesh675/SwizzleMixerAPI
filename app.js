@@ -53,11 +53,15 @@ function isAuthenticated(req, res, next) {
 
 REST.prototype.configureExpress = function(pool) {
       var self = this;
-
       app.use('/publish', express.static(__dirname + '/htmls'));
-      app.use('/', isAuthenticated, express.static(__dirname + '/swizzle_mixer'));
+      app.use('/', express.static(__dirname + '/swizzle_mixer'));
       app.use(bodyParser.urlencoded({ extended: true }));
       app.use(bodyParser.json());
+
+      // jade
+      app.set('views', './views')
+      app.set('view engine', 'jade');      
+      app.use(express.static(__dirname + '/public'));
       var router = express.Router();
       router.use(function (req, res, next) {
 

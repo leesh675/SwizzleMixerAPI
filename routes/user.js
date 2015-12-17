@@ -51,15 +51,22 @@ REST_ROUTER.prototype.handleRoutes= function(router,pool,md5) {
                     res.json({"error" : true, "message" : errMessage});
                     return;
                 }
-                
+
+                var email = rows[0].email;
+                var uid = rows[0].uid;
+
                 if(validateHash(rows[0].pw, req.body.pw)){
                     var token = md5(rows + Math.random());
                     var queryUpdate = "UPDATE ?? set token=?, login=now() WHERE email = ?";
                     var params = ["user", token, req.body.email];
                     queryUpdate = mysql.format(queryUpdate,params);
                     pool.query(queryUpdate,function(err,rows){
-                        if(!err) {                            
-                            var jData = { "redirectUrl" : "http://localhost:3000/tool?token=" + token};
+                        if(!err) {
+                            var jData = { 
+                                          "redirectPath" : "/mixer/" + token,
+                                          "email" : email,
+                                          "uid" : uid
+                                        };
                             res.json(jData);                            
                         } 
                     });
